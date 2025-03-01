@@ -6,7 +6,6 @@ import UiButton from "@/components/ui/ui-button.vue";
 
 
 const isOpenModal = defineModel('isOpenModal')
-
 </script>
 
 <template>
