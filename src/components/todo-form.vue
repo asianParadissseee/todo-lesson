@@ -4,7 +4,7 @@ import UiButton from "@/components/ui/ui-button.vue";
 import UiInput from "@/components/ui/ui-input.vue";
 
 const title = defineModel('title')
-const description = defineModel('description')
+const body = defineModel('body')
 
 const emit = defineEmits(['createTodo'])
 const {errorMessage} = defineProps(['errorMessage'])
@@ -13,7 +13,7 @@ const {errorMessage} = defineProps(['errorMessage'])
 <template>
   <form class="todo-form">
     <ui-input placeholder="Введите заголовок" v-model:input-model="title"/>
-    <textarea placeholder="Введите описание" v-model="description" type="text" rows="10" cols="4"></textarea>
+    <textarea placeholder="Введите описание" v-model="body" type="text" rows="10" cols="4"></textarea>
     <p class="error-message">
       {{ errorMessage }}
     </p>

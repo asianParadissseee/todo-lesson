@@ -6,17 +6,26 @@ import UiButton from "@/components/ui/ui-button.vue";
 
 
 const isOpenModal = defineModel('isOpenModal')
+const selectedTodo = defineModel('selectedTodo')
+
+const emits = defineEmits(['update-todo'])
+
+const saveChanges = () => {
+  emits('update-todo', selectedTodo);
+  isOpenModal.value = false;
+}
+
 </script>
 
 <template>
   <div>
     <UiModal v-model:is-open="isOpenModal">
       <p class="edit-title">
-        Редактировать задачу номер № {{ 3 }}
+        Редактировать задачу номер № {{ selectedTodo.id }}
       </p>
-      <ui-input class="edit-input" placeholder="Введите заголовок"/>
-      <ui-input class="edit-input" placeholder="Введите описание"/>
-      <ui-button>
+      <ui-input v-model:input-model="selectedTodo.title" class="edit-input" placeholder="Введите заголовок"/>
+      <ui-input v-model:input-model="selectedTodo.body" class="edit-input" placeholder="Введите описание"/>
+      <ui-button @click.stop="saveChanges">
         Сохранить
       </ui-button>
     </UiModal>

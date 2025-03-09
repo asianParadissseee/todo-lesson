@@ -7,25 +7,26 @@ import {onMounted, ref} from "vue";
 import axios from "axios";
 
 
+const selectedTodo = ref(null)
 const isLoading = ref(false);
 const todoCards = ref([])
 const title = ref("")
-const description = ref("")
+const body = ref("")
 const errorMessage = ref("")
 const errorResponse = ref("")
 
 const createTodo = () => {
-  if (!title.value.length || !description.value.length) {
+  if (!title.value.length || !body.value.length) {
     errorMessage.value = "Заполните все поля"
     return;
   }
   todoCards.value.push({
     id: crypto.randomUUID(),
     title: title.value,
-    description: description.value,
+    body: body.value,
   })
   title.value = "";
-  description.value = "";
+  body.value = "";
   errorMessage.value = "";
 }
 
@@ -34,7 +35,8 @@ const removeTodo = (id) => {
 }
 
 const isOpenModal = ref(false);
-const toggleEditModal = () => {
+const toggleEditModal = (todo) => {
+  selectedTodo.value = todo
   isOpenModal.value = !isOpenModal.value;
 }
 
@@ -53,18 +55,30 @@ async function getTodos() {
 }
 
 onMounted(() => {
-  console.log("Компонент монтирован")
   getTodos()
 })
+
+const handleUpdateTodo = (updateTodo) => {
+  const idx = todoCards.value.findIndex((todo) => todo.id === updateTodo.id)
+  if (idx !== -1) {
+    todoCards.value[idx] = {...updateTodo}
+  }
+}
+
+
 </script>
 
 <template>
   <div>
-    <TodoEdit v-model:is-open-modal="isOpenModal"/>
+    <TodoEdit
+        v-model:selected-todo="selectedTodo"
+        @update-todo="handleUpdateTodo"
+        v-model:is-open-modal="isOpenModal"
+    />
     <TodoForm
         :error-message="errorMessage"
         v-model:title="title"
-        v-model:description="description"
+        v-model:body="body"
         @create-todo="createTodo"
     />
     <div v-if="isLoading">

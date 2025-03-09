@@ -10,13 +10,13 @@ const emits = defineEmits(['removeTodo', 'toggleEditModal'])
 <template>
   <div class="todo_card">
     <p>
-      {{ todo?.title }}
+      {{ todo?.title || 'Заголовок отсутствует' }}
     </p>
     <span>
-    {{ todo?.description }}
+    {{ todo?.body || 'Описание отсутствует' }}
     </span>
     <div>
-      <ui-button color="danger" @click="emits('toggleEditModal')">
+      <ui-button color="danger" @click="emits('toggleEditModal', todo)">
         Изменить
       </ui-button>
       <ui-button @click="emits('removeTodo', todo?.id)">

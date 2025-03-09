@@ -1,7 +1,5 @@
 import {createRouter, createWebHistory} from "vue-router";
 import HomePage from "@/pages/home-page.vue";
-import TodoPage from "@/pages/todo-page.vue";
-import AboutPage from "@/pages/about-page.vue";
 
 export const routerConfig = createRouter({
     history: createWebHistory(),
@@ -14,12 +12,12 @@ export const routerConfig = createRouter({
         {
             name: "Todo",
             path: "/todo",
-            component: TodoPage
+            component: () => import("@/pages/todo-page.vue")
         },
         {
             name: "About",
             path: "/about",
-            component: AboutPage
+            component: () => import("@/pages/about-page.vue")
         }
     ]
 })
