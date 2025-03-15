@@ -1,10 +1,10 @@
 <script setup>
 
 import UiButton from "@/components/ui/ui-button.vue";
-
 const {todo} = defineProps(['todo']);
 
 const emits = defineEmits(['removeTodo', 'toggleEditModal'])
+
 </script>
 
 <template>

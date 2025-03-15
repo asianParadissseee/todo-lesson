@@ -2,7 +2,9 @@
 
 
 import {useRouter} from "vue-router";
+import {inject} from "vue";
 
+const isOpenSidebar = inject("isOpenSidebar")
 const links = [
   {
     name: "Todos",
@@ -30,6 +32,9 @@ const router = useRouter()
           </li>
         </ul>
       </nav>
+      <div class="burger" @click="isOpenSidebar = true">
+        <span v-for="line in 3" :key="line"></span>
+      </div>
     </div>
   </header>
 </template>
@@ -66,5 +71,27 @@ const router = useRouter()
   font-weight: 600;
   font-size: 18px;
   font-family: sans-serif;
+}
+
+@media screen and (max-width: 768px) {
+  .navigation {
+    display: none;
+  }
+  .burger {
+    display: flex !important;
+  }
+}
+.burger {
+  width: 28px;
+  height: 28px;
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.burger span {
+  width: 100%;
+  background: white;
+  height: 2px;
 }
 </style>
